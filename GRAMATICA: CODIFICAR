@@ -1,0 +1,61 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+
+\begin{document}
+
+\title{Código para Cifrar un Texto}
+\author{}
+\date{}
+\maketitle
+
+\section*{Código en C}
+
+\begin{lstlisting}
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LENGTH 10000 // Longitud máxima del texto
+#define KEY_LENGTH 26    // Longitud de la clave de cifrado
+
+// Clave de cifrado (26 caracteres únicos que vamos a usar)
+char clave[KEY_LENGTH] = {'*', '/', '+', '-', '\'', '%', '&', '=', '¡', '?', '#', '$', '!', '_', '[', ']', '(', ')', '{', '}', '^', '~', ':', ';', '<', '>'};
+
+// Función para cifrar el texto
+void cifrarTexto(char *texto, char *textoCifrado) {
+    int longitud = strlen(texto);
+
+    for (int i = 0; i < longitud; i++) {
+        if (texto[i] >= 'a' && texto[i] <= 'z') {
+            textoCifrado[i] = clave[texto[i] - 'a'];
+        } else if (texto[i] >= 'A' && texto[i] <= 'Z') {
+            textoCifrado[i] = clave[texto[i] - 'A'];
+        } else {
+            textoCifrado[i] = texto[i]; // No cifrar caracteres no alfabéticos
+        }
+    }
+    textoCifrado[longitud] = '\0'; // Asegurarse de terminar la cadena
+}
+
+int main() {
+    char texto[MAX_LENGTH];
+    char textoCifrado[MAX_LENGTH];
+
+    printf("Ingrese el texto para cifrar (hasta 10000 caracteres):\n");
+    fgets(texto, sizeof(texto), stdin);
+
+    // Eliminar el salto de línea al final del texto si existe
+    size_t len = strlen(texto);
+    if (len > 0 && texto[len-1] == '\n') {
+        texto[len-1] = '\0';
+    }
+
+    cifrarTexto(texto, textoCifrado);
+
+    printf("Texto cifrado:\n%s\n", textoCifrado);
+
+    return 0;
+}
+\end{lstlisting}
+
+\end{document}
