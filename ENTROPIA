@@ -1,3 +1,57 @@
-texto: file:///C:/Users/acer/Downloads/Software_Engineering%20(2).pdf
-codigo: file:///C:/Users/acer/Downloads/Software_Engineering%20(1).pdf
-la entropia de mi texto es: 1.584963 bits
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+
+\begin{document}
+
+\title{Código para Calcular la Entropía de Shannon}
+\author{}
+\date{}
+\maketitle
+
+\section*{Código en C}
+
+\begin{lstlisting}
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+
+#define MAX_LENGTH 10000 // Longitud máxima del texto
+
+// Función para calcular la entropía de Shannon
+double calcularEntropia(char *texto) {
+    int frecuencia[256] = {0}; // Array para contar la frecuencia de cada símbolo
+    double probabilidad[256] = {0}; // Array para almacenar la probabilidad de cada símbolo
+    int longitud = strlen(texto);
+    double entropia = 0.0;
+
+    // Contar la frecuencia de cada símbolo en el texto
+    for (int i = 0; i < longitud; i++) {
+        frecuencia[(unsigned char)texto[i]]++;
+    }
+
+    // Calcular la probabilidad de cada símbolo y la entropía
+    for (int i = 0; i < 256; i++) {
+        if (frecuencia[i] > 0) {
+            probabilidad[i] = (double)frecuencia[i] / longitud;
+            entropia -= probabilidad[i] * log2(probabilidad[i]);
+        }
+    }
+
+    return entropia;
+}
+
+int main() {
+    char texto[MAX_LENGTH];
+    printf("Ingrese el texto para calcular la entropia de Shannon:\n");
+    fgets(texto, sizeof(texto), stdin);
+
+    double entropia = calcularEntropia(texto);
+
+    printf("La entropia de Shannon del texto es: %lf bits/simbolo\n", entropia);
+
+    return 0;
+}
+\end{lstlisting}
+
+\end{document}
