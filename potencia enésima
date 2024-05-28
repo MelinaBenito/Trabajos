@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+// Función para generar la potencia enésima de un lenguaje
+vector<string> generarPotencia(vector<char> alfabeto, int potencia) {
+    vector<string> lenguaje = {""};
+
+    for (int i = 0; i < potencia; i++) {
+        vector<string> nuevo_lenguaje;
+        for (const string& palabra : lenguaje) {
+            for (char letra : alfabeto) {
+                nuevo_lenguaje.push_back(palabra + letra);
+            }
+        }
+        lenguaje = nuevo_lenguaje;
+    }
+
+    return lenguaje;
+}
+
+int main() {
+    int n;
+    cout << "Ingrese el tamaño del alfabeto (n): ";
+    cin >> n;
+
+    vector<char> alfabeto(n);
+    for (int i = 0; i < n; i++) {
+        cout << "Ingrese el elemento " << i + 1 << " del alfabeto: ";
+        cin >> alfabeto[i];
+    }
+
+    int potencia;
+    cout << "Ingrese la potencia del lenguaje (P): ";
+    cin >> potencia;
+
+    vector<string> lenguajePotencia = generarPotencia(alfabeto, potencia);
+
+    cout << "\nElementos del lenguaje (L^" << potencia << "):" << endl;
+    for (const string& palabra : lenguajePotencia) {
+        cout << palabra << endl;
+    }
+
+    return 0;
+}
